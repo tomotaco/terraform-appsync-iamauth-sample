@@ -1,0 +1,24 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  text(id: ID!): Text
+  listText(nextToken: String): TextConnection
+}
+
+type Mutation {
+  createText(text: String!): Text
+  deleteText(id: ID!): Text
+}
+
+type TextConnection {
+  items: [Text]
+  nextToken: String
+}
+
+type Text {
+  id: ID!
+  text: String!
+}
