@@ -5,6 +5,6 @@
         "id": {"S": "$util.autoId()"}
     },
     "attributeValues": {
-        "text": {"S": "${context.arguments.text}" },
+        "text": {"S": "${context.arguments.text}" }
     }
 }

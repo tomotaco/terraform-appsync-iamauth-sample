@@ -26,6 +26,11 @@ locals {
                 type = "Mutation"
                 data_source = local.datasource_name
             }
+            update_text = {
+                field = "updateText"
+                type = "Mutation"
+                data_source = local.datasource_name
+            }
             delete_text = {
                 field = "deleteText"
                 type = "Mutation"

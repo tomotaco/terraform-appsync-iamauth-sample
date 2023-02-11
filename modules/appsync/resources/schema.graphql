@@ -1,6 +1,7 @@
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
@@ -10,7 +11,14 @@ type Query {
 
 type Mutation {
   createText(text: String!): Text
+  updateText(id: ID!, text: String): Text
   deleteText(id: ID!): Text
+}
+
+type Subscription {
+  onCreateText: Text @aws_subscribe(mutations: ["createText"])
+  onUpdateText(id: ID): Text @aws_subscribe(mutations: ["updateText"])
+  onDeleteText(id: ID): Text @aws_subscribe(mutations: ["deleteText"])
 }
 
 type TextConnection {
