@@ -1,7 +1,7 @@
 # Sample terraform configuration for AWS Appsync with IAM Authentication
 
 This project is a modified version of [tsubasaogawa/terraform-appsync-graphql-test](https://github.com/tsubasaogawa/terraform-appsync-graphql-test).
-This creates AWS Appsync to create/delete/get/list records, with IAM authentication.
+This creates AWS Appsync to create/update/delete/get/list records and subscriptions to all mutations, with IAM authentication.
 It also creates IAM policy to permit GraphQL action to that.
 
 ## Usage
@@ -46,6 +46,7 @@ appsync_api_uris = tomap({
 schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
@@ -55,7 +56,14 @@ type Query {
 
 type Mutation {
   createText(text: String!): Text
+  updateText(id: ID!, text: String): Text
   deleteText(id: ID!): Text
+}
+
+type Subscription {
+  onCreateText: Text @aws_subscribe(mutations: ["createText"])
+  onUpdateText(id: ID): Text @aws_subscribe(mutations: ["updateText"])
+  onDeleteText(id: ID): Text @aws_subscribe(mutations: ["deleteText"])
 }
 
 type TextConnection {
